@@ -7,10 +7,17 @@ let package = Package(
     products: [
         .library(
             name: "CSFlutterModule",
-            targets: ["App", "Flutter"]
+            targets: ["CSFlutterModule"]
         ),
     ],
     targets: [
+        .target(
+            name: "CSFlutterModule",
+            dependencies: [
+                "App",
+                "Flutter"
+            ]
+        ),
         .binaryTarget(
             name: "App",
             path: "build/iOS/Release/App.xcframework"
