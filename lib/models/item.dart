@@ -22,8 +22,3 @@ class Item {
   }
 }
 
-extension ItemExtension on Item {
-  ImageProvider<Object>? get image {
-    return imageData != null ? MemoryImage(imageData!) : null;
-  }
-}

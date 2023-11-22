@@ -91,6 +91,17 @@ class _RouletteState extends State<Roulette>
     setState(() => prevEnd = end.toInt());
   }
 
+  ImageProvider<Object>? get backgroundImage {
+    if (items.isEmpty) {
+      return null;
+    }
+    final imageData = items[animation.value.round() % items.length].imageData;
+    if (imageData == null) {
+      return null;
+    }
+    return MemoryImage(imageData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,12 +132,7 @@ class _RouletteState extends State<Roulette>
                             color: Colors.white,
                             shape: BoxShape.circle,
                           ),
-                          child: CircleAvatar(
-                            backgroundImage: items.isEmpty
-                                ? null
-                                : items[animation.value.round() % items.length]
-                                    .image,
-                          ),
+                          child: CircleAvatar(backgroundImage: backgroundImage),
                         ),
                       ),
                     ),
