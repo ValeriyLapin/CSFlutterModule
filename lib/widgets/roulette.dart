@@ -42,7 +42,7 @@ class _RouletteState extends State<Roulette>
       case methodName:
         final List<dynamic> dynamicList = call.arguments;
         List<Item> items = dynamicList.map((dynamic item) {
-          Map<String, dynamic> itemMap = Map<String, dynamic>.from(item);
+          final itemMap = Map<String, dynamic>.from(item);
           return Item.fromMap(itemMap);
         }).toList();
         setState(() {
