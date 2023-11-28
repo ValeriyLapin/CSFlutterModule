@@ -7,7 +7,7 @@ let package = Package(
     products: [
         .library(
             name: "CSFlutterModule",
-            targets: ["App", "Flutter"]
+            targets: ["App", "Flutter", "AppResources"]
         ),
     ],
     targets: [
