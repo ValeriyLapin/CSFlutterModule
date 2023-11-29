@@ -13,15 +13,15 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class ResourceType extends $pb.ProtobufEnum {
-  static const ResourceType UNKNOWN = ResourceType._(0, _omitEnumNames ? '' : 'UNKNOWN');
-  static const ResourceType PDF = ResourceType._(1, _omitEnumNames ? '' : 'PDF');
-  static const ResourceType IMAGE = ResourceType._(2, _omitEnumNames ? '' : 'IMAGE');
-  static const ResourceType VIDEO = ResourceType._(3, _omitEnumNames ? '' : 'VIDEO');
-  static const ResourceType AUDIO = ResourceType._(4, _omitEnumNames ? '' : 'AUDIO');
-  static const ResourceType URL = ResourceType._(5, _omitEnumNames ? '' : 'URL');
+class FResourceType extends $pb.ProtobufEnum {
+  static const FResourceType UNKNOWN = FResourceType._(0, _omitEnumNames ? '' : 'UNKNOWN');
+  static const FResourceType PDF = FResourceType._(1, _omitEnumNames ? '' : 'PDF');
+  static const FResourceType IMAGE = FResourceType._(2, _omitEnumNames ? '' : 'IMAGE');
+  static const FResourceType VIDEO = FResourceType._(3, _omitEnumNames ? '' : 'VIDEO');
+  static const FResourceType AUDIO = FResourceType._(4, _omitEnumNames ? '' : 'AUDIO');
+  static const FResourceType URL = FResourceType._(5, _omitEnumNames ? '' : 'URL');
 
-  static const $core.List<ResourceType> values = <ResourceType> [
+  static const $core.List<FResourceType> values = <FResourceType> [
     UNKNOWN,
     PDF,
     IMAGE,
@@ -30,10 +30,10 @@ class ResourceType extends $pb.ProtobufEnum {
     URL,
   ];
 
-  static final $core.Map<$core.int, ResourceType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static ResourceType? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, FResourceType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static FResourceType? valueOf($core.int value) => _byValue[value];
 
-  const ResourceType._($core.int v, $core.String n) : super(v, n);
+  const FResourceType._($core.int v, $core.String n) : super(v, n);
 }
 
 

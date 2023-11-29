@@ -17,9 +17,9 @@ import 'resources.pbenum.dart';
 
 export 'resources.pbenum.dart';
 
-class ResourcesList extends $pb.GeneratedMessage {
-  factory ResourcesList({
-    $core.Iterable<Resource>? resources,
+class FResourcesList extends $pb.GeneratedMessage {
+  factory FResourcesList({
+    $core.Iterable<FResource>? resources,
   }) {
     final $result = create();
     if (resources != null) {
@@ -27,12 +27,12 @@ class ResourcesList extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ResourcesList._() : super();
-  factory ResourcesList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ResourcesList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FResourcesList._() : super();
+  factory FResourcesList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FResourcesList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ResourcesList', createEmptyInstance: create)
-    ..pc<Resource>(1, _omitFieldNames ? '' : 'resources', $pb.PbFieldType.PM, subBuilder: Resource.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FResourcesList', createEmptyInstance: create)
+    ..pc<FResource>(1, _omitFieldNames ? '' : 'resources', $pb.PbFieldType.PM, subBuilder: FResource.create)
     ..hasRequiredFields = false
   ;
 
@@ -40,25 +40,25 @@ class ResourcesList extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ResourcesList clone() => ResourcesList()..mergeFromMessage(this);
+  FResourcesList clone() => FResourcesList()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ResourcesList copyWith(void Function(ResourcesList) updates) => super.copyWith((message) => updates(message as ResourcesList)) as ResourcesList;
+  FResourcesList copyWith(void Function(FResourcesList) updates) => super.copyWith((message) => updates(message as FResourcesList)) as FResourcesList;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ResourcesList create() => ResourcesList._();
-  ResourcesList createEmptyInstance() => create();
-  static $pb.PbList<ResourcesList> createRepeated() => $pb.PbList<ResourcesList>();
+  static FResourcesList create() => FResourcesList._();
+  FResourcesList createEmptyInstance() => create();
+  static $pb.PbList<FResourcesList> createRepeated() => $pb.PbList<FResourcesList>();
   @$core.pragma('dart2js:noInline')
-  static ResourcesList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResourcesList>(create);
-  static ResourcesList? _defaultInstance;
+  static FResourcesList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FResourcesList>(create);
+  static FResourcesList? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<Resource> get resources => $_getList(0);
+  $core.List<FResource> get resources => $_getList(0);
 }
 
 class IntList extends $pb.GeneratedMessage {
@@ -105,14 +105,14 @@ class IntList extends $pb.GeneratedMessage {
   $core.List<$core.int> get values => $_getList(0);
 }
 
-class Resource extends $pb.GeneratedMessage {
-  factory Resource({
+class FResource extends $pb.GeneratedMessage {
+  factory FResource({
     $core.String? id,
     $core.String? date,
     $core.Map<$core.String, IntList>? flares,
     $core.String? path,
     $core.String? title,
-    ResourceType? type,
+    FResourceType? type,
     $core.bool? isICloud,
     $core.bool? canBeDownloaded,
     $core.bool? isDownloading,
@@ -155,17 +155,17 @@ class Resource extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  Resource._() : super();
-  factory Resource.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Resource.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FResource._() : super();
+  factory FResource.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FResource.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Resource', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FResource', createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'date')
-    ..m<$core.String, IntList>(3, _omitFieldNames ? '' : 'flares', entryClassName: 'Resource.FlaresEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: IntList.create, valueDefaultOrMaker: IntList.getDefault)
+    ..m<$core.String, IntList>(3, _omitFieldNames ? '' : 'flares', entryClassName: 'FResource.FlaresEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: IntList.create, valueDefaultOrMaker: IntList.getDefault)
     ..aOS(4, _omitFieldNames ? '' : 'path')
     ..aOS(5, _omitFieldNames ? '' : 'title')
-    ..e<ResourceType>(6, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ResourceType.UNKNOWN, valueOf: ResourceType.valueOf, enumValues: ResourceType.values)
+    ..e<FResourceType>(6, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: FResourceType.UNKNOWN, valueOf: FResourceType.valueOf, enumValues: FResourceType.values)
     ..aOB(7, _omitFieldNames ? '' : 'isICloud', protoName: 'isICloud')
     ..aOB(8, _omitFieldNames ? '' : 'canBeDownloaded', protoName: 'canBeDownloaded')
     ..aOB(9, _omitFieldNames ? '' : 'isDownloading', protoName: 'isDownloading')
@@ -178,22 +178,22 @@ class Resource extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  Resource clone() => Resource()..mergeFromMessage(this);
+  FResource clone() => FResource()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Resource copyWith(void Function(Resource) updates) => super.copyWith((message) => updates(message as Resource)) as Resource;
+  FResource copyWith(void Function(FResource) updates) => super.copyWith((message) => updates(message as FResource)) as FResource;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static Resource create() => Resource._();
-  Resource createEmptyInstance() => create();
-  static $pb.PbList<Resource> createRepeated() => $pb.PbList<Resource>();
+  static FResource create() => FResource._();
+  FResource createEmptyInstance() => create();
+  static $pb.PbList<FResource> createRepeated() => $pb.PbList<FResource>();
   @$core.pragma('dart2js:noInline')
-  static Resource getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Resource>(create);
-  static Resource? _defaultInstance;
+  static FResource getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FResource>(create);
+  static FResource? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -235,9 +235,9 @@ class Resource extends $pb.GeneratedMessage {
   void clearTitle() => clearField(5);
 
   @$pb.TagNumber(6)
-  ResourceType get type => $_getN(5);
+  FResourceType get type => $_getN(5);
   @$pb.TagNumber(6)
-  set type(ResourceType v) { setField(6, v); }
+  set type(FResourceType v) { setField(6, v); }
   @$pb.TagNumber(6)
   $core.bool hasType() => $_has(5);
   @$pb.TagNumber(6)

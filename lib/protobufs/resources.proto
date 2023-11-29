@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-enum ResourceType {
+enum FResourceType {
     UNKNOWN = 0;
     PDF = 1;
     IMAGE = 2;
@@ -9,21 +9,21 @@ enum ResourceType {
     URL = 5;
 }
 
-message ResourcesList {
-    repeated Resource resources = 1;
+message FResourcesList {
+    repeated FResource resources = 1;
 }
 
 message IntList {
     repeated int32 values = 1;
 }
 
-message Resource {
+message FResource {
     string id = 1;
     string date = 2;
     map<string, IntList> flares = 3;
     string path = 4;
     string title = 5;
-    ResourceType type = 6;
+    FResourceType type = 6;
     bool isICloud = 7;
     bool canBeDownloaded = 8;
     bool isDownloading = 9;
