@@ -30,8 +30,5 @@ message FResource {
     string title = 5;
     FResourceType type = 6;
     bool isICloud = 7;
-    bool canBeDownloaded = 8;
-    bool isDownloading = 9;
-    bool isDownloaded = 10;
-    bool hasFlares = 11;
+    double downloadingProgress = 8;
 }

@@ -180,10 +180,7 @@ class FResource extends $pb.GeneratedMessage {
     $core.String? title,
     FResourceType? type,
     $core.bool? isICloud,
-    $core.bool? canBeDownloaded,
-    $core.bool? isDownloading,
-    $core.bool? isDownloaded,
-    $core.bool? hasFlares,
+    $core.double? downloadingProgress,
   }) {
     final $result = create();
     if (id != null) {
@@ -207,17 +204,8 @@ class FResource extends $pb.GeneratedMessage {
     if (isICloud != null) {
       $result.isICloud = isICloud;
     }
-    if (canBeDownloaded != null) {
-      $result.canBeDownloaded = canBeDownloaded;
-    }
-    if (isDownloading != null) {
-      $result.isDownloading = isDownloading;
-    }
-    if (isDownloaded != null) {
-      $result.isDownloaded = isDownloaded;
-    }
-    if (hasFlares != null) {
-      $result.hasFlares = hasFlares;
+    if (downloadingProgress != null) {
+      $result.downloadingProgress = downloadingProgress;
     }
     return $result;
   }
@@ -233,10 +221,7 @@ class FResource extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'title')
     ..e<FResourceType>(6, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: FResourceType.UNKNOWN, valueOf: FResourceType.valueOf, enumValues: FResourceType.values)
     ..aOB(7, _omitFieldNames ? '' : 'isICloud', protoName: 'isICloud')
-    ..aOB(8, _omitFieldNames ? '' : 'canBeDownloaded', protoName: 'canBeDownloaded')
-    ..aOB(9, _omitFieldNames ? '' : 'isDownloading', protoName: 'isDownloading')
-    ..aOB(10, _omitFieldNames ? '' : 'isDownloaded', protoName: 'isDownloaded')
-    ..aOB(11, _omitFieldNames ? '' : 'hasFlares', protoName: 'hasFlares')
+    ..a<$core.double>(8, _omitFieldNames ? '' : 'downloadingProgress', $pb.PbFieldType.OD, protoName: 'downloadingProgress')
     ..hasRequiredFields = false
   ;
 
@@ -319,40 +304,13 @@ class FResource extends $pb.GeneratedMessage {
   void clearIsICloud() => clearField(7);
 
   @$pb.TagNumber(8)
-  $core.bool get canBeDownloaded => $_getBF(7);
+  $core.double get downloadingProgress => $_getN(7);
   @$pb.TagNumber(8)
-  set canBeDownloaded($core.bool v) { $_setBool(7, v); }
+  set downloadingProgress($core.double v) { $_setDouble(7, v); }
   @$pb.TagNumber(8)
-  $core.bool hasCanBeDownloaded() => $_has(7);
+  $core.bool hasDownloadingProgress() => $_has(7);
   @$pb.TagNumber(8)
-  void clearCanBeDownloaded() => clearField(8);
-
-  @$pb.TagNumber(9)
-  $core.bool get isDownloading => $_getBF(8);
-  @$pb.TagNumber(9)
-  set isDownloading($core.bool v) { $_setBool(8, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasIsDownloading() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearIsDownloading() => clearField(9);
-
-  @$pb.TagNumber(10)
-  $core.bool get isDownloaded => $_getBF(9);
-  @$pb.TagNumber(10)
-  set isDownloaded($core.bool v) { $_setBool(9, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasIsDownloaded() => $_has(9);
-  @$pb.TagNumber(10)
-  void clearIsDownloaded() => clearField(10);
-
-  @$pb.TagNumber(11)
-  $core.bool get hasFlares => $_getBF(10);
-  @$pb.TagNumber(11)
-  set hasFlares($core.bool v) { $_setBool(10, v); }
-  @$pb.TagNumber(11)
-  $core.bool hasHasFlares() => $_has(10);
-  @$pb.TagNumber(11)
-  void clearHasFlares() => clearField(11);
+  void clearDownloadingProgress() => clearField(8);
 }
 
 
