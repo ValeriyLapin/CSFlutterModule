@@ -9,8 +9,9 @@ enum FResourceType {
     URL = 5;
 }
 
-message FResourcesList {
-    repeated FResource resources = 1;
+message FResourcesState {
+    bool isICloudAvailable = 1;
+    repeated FResource resources = 2;
 }
 
 message IntList {

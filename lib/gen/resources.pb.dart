@@ -17,22 +17,27 @@ import 'resources.pbenum.dart';
 
 export 'resources.pbenum.dart';
 
-class FResourcesList extends $pb.GeneratedMessage {
-  factory FResourcesList({
+class FResourcesState extends $pb.GeneratedMessage {
+  factory FResourcesState({
+    $core.bool? isICloudAvailable,
     $core.Iterable<FResource>? resources,
   }) {
     final $result = create();
+    if (isICloudAvailable != null) {
+      $result.isICloudAvailable = isICloudAvailable;
+    }
     if (resources != null) {
       $result.resources.addAll(resources);
     }
     return $result;
   }
-  FResourcesList._() : super();
-  factory FResourcesList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FResourcesList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FResourcesState._() : super();
+  factory FResourcesState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FResourcesState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FResourcesList', createEmptyInstance: create)
-    ..pc<FResource>(1, _omitFieldNames ? '' : 'resources', $pb.PbFieldType.PM, subBuilder: FResource.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FResourcesState', createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'isICloudAvailable', protoName: 'isICloudAvailable')
+    ..pc<FResource>(2, _omitFieldNames ? '' : 'resources', $pb.PbFieldType.PM, subBuilder: FResource.create)
     ..hasRequiredFields = false
   ;
 
@@ -40,25 +45,34 @@ class FResourcesList extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  FResourcesList clone() => FResourcesList()..mergeFromMessage(this);
+  FResourcesState clone() => FResourcesState()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FResourcesList copyWith(void Function(FResourcesList) updates) => super.copyWith((message) => updates(message as FResourcesList)) as FResourcesList;
+  FResourcesState copyWith(void Function(FResourcesState) updates) => super.copyWith((message) => updates(message as FResourcesState)) as FResourcesState;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static FResourcesList create() => FResourcesList._();
-  FResourcesList createEmptyInstance() => create();
-  static $pb.PbList<FResourcesList> createRepeated() => $pb.PbList<FResourcesList>();
+  static FResourcesState create() => FResourcesState._();
+  FResourcesState createEmptyInstance() => create();
+  static $pb.PbList<FResourcesState> createRepeated() => $pb.PbList<FResourcesState>();
   @$core.pragma('dart2js:noInline')
-  static FResourcesList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FResourcesList>(create);
-  static FResourcesList? _defaultInstance;
+  static FResourcesState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FResourcesState>(create);
+  static FResourcesState? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<FResource> get resources => $_getList(0);
+  $core.bool get isICloudAvailable => $_getBF(0);
+  @$pb.TagNumber(1)
+  set isICloudAvailable($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIsICloudAvailable() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIsICloudAvailable() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<FResource> get resources => $_getList(1);
 }
 
 class IntList extends $pb.GeneratedMessage {
