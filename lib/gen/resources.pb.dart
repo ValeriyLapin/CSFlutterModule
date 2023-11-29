@@ -20,14 +20,14 @@ export 'resources.pbenum.dart';
 class FResourcesState extends $pb.GeneratedMessage {
   factory FResourcesState({
     $core.bool? isICloudAvailable,
-    $core.Iterable<FResource>? resources,
+    FResourceList? resourcesList,
   }) {
     final $result = create();
     if (isICloudAvailable != null) {
       $result.isICloudAvailable = isICloudAvailable;
     }
-    if (resources != null) {
-      $result.resources.addAll(resources);
+    if (resourcesList != null) {
+      $result.resourcesList = resourcesList;
     }
     return $result;
   }
@@ -37,7 +37,7 @@ class FResourcesState extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FResourcesState', createEmptyInstance: create)
     ..aOB(1, _omitFieldNames ? '' : 'isICloudAvailable', protoName: 'isICloudAvailable')
-    ..pc<FResource>(2, _omitFieldNames ? '' : 'resources', $pb.PbFieldType.PM, subBuilder: FResource.create)
+    ..aOM<FResourceList>(2, _omitFieldNames ? '' : 'resourcesList', protoName: 'resourcesList', subBuilder: FResourceList.create)
     ..hasRequiredFields = false
   ;
 
@@ -72,7 +72,59 @@ class FResourcesState extends $pb.GeneratedMessage {
   void clearIsICloudAvailable() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<FResource> get resources => $_getList(1);
+  FResourceList get resourcesList => $_getN(1);
+  @$pb.TagNumber(2)
+  set resourcesList(FResourceList v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResourcesList() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResourcesList() => clearField(2);
+  @$pb.TagNumber(2)
+  FResourceList ensureResourcesList() => $_ensure(1);
+}
+
+class FResourceList extends $pb.GeneratedMessage {
+  factory FResourceList({
+    $core.Iterable<FResource>? resources,
+  }) {
+    final $result = create();
+    if (resources != null) {
+      $result.resources.addAll(resources);
+    }
+    return $result;
+  }
+  FResourceList._() : super();
+  factory FResourceList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FResourceList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FResourceList', createEmptyInstance: create)
+    ..pc<FResource>(1, _omitFieldNames ? '' : 'resources', $pb.PbFieldType.PM, subBuilder: FResource.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FResourceList clone() => FResourceList()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FResourceList copyWith(void Function(FResourceList) updates) => super.copyWith((message) => updates(message as FResourceList)) as FResourceList;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FResourceList create() => FResourceList._();
+  FResourceList createEmptyInstance() => create();
+  static $pb.PbList<FResourceList> createRepeated() => $pb.PbList<FResourceList>();
+  @$core.pragma('dart2js:noInline')
+  static FResourceList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FResourceList>(create);
+  static FResourceList? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<FResource> get resources => $_getList(0);
 }
 
 class IntList extends $pb.GeneratedMessage {

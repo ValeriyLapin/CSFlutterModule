@@ -11,7 +11,11 @@ enum FResourceType {
 
 message FResourcesState {
     bool isICloudAvailable = 1;
-    repeated FResource resources = 2;
+    FResourceList resourcesList = 2;
+}
+
+message FResourceList {
+    repeated FResource resources = 1;
 }
 
 message IntList {
