@@ -174,7 +174,7 @@ class IntList extends $pb.GeneratedMessage {
 class FResource extends $pb.GeneratedMessage {
   factory FResource({
     $core.String? id,
-    $core.String? date,
+    $core.double? timeIntervalSince1970,
     $core.Map<$core.String, IntList>? flares,
     $core.String? path,
     $core.String? title,
@@ -186,8 +186,8 @@ class FResource extends $pb.GeneratedMessage {
     if (id != null) {
       $result.id = id;
     }
-    if (date != null) {
-      $result.date = date;
+    if (timeIntervalSince1970 != null) {
+      $result.timeIntervalSince1970 = timeIntervalSince1970;
     }
     if (flares != null) {
       $result.flares.addAll(flares);
@@ -215,7 +215,7 @@ class FResource extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FResource', createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(2, _omitFieldNames ? '' : 'date')
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'timeIntervalSince1970', $pb.PbFieldType.OD, protoName: 'timeIntervalSince1970')
     ..m<$core.String, IntList>(3, _omitFieldNames ? '' : 'flares', entryClassName: 'FResource.FlaresEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: IntList.create, valueDefaultOrMaker: IntList.getDefault)
     ..aOS(4, _omitFieldNames ? '' : 'path')
     ..aOS(5, _omitFieldNames ? '' : 'title')
@@ -256,13 +256,13 @@ class FResource extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get date => $_getSZ(1);
+  $core.double get timeIntervalSince1970 => $_getN(1);
   @$pb.TagNumber(2)
-  set date($core.String v) { $_setString(1, v); }
+  set timeIntervalSince1970($core.double v) { $_setDouble(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasDate() => $_has(1);
+  $core.bool hasTimeIntervalSince1970() => $_has(1);
   @$pb.TagNumber(2)
-  void clearDate() => clearField(2);
+  void clearTimeIntervalSince1970() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.Map<$core.String, IntList> get flares => $_getMap(2);
