@@ -181,6 +181,7 @@ class FResource extends $pb.GeneratedMessage {
     FResourceType? type,
     $core.bool? isICloud,
     $core.double? downloadingProgress,
+    $core.bool? hasCopy,
   }) {
     final $result = create();
     if (id != null) {
@@ -207,6 +208,9 @@ class FResource extends $pb.GeneratedMessage {
     if (downloadingProgress != null) {
       $result.downloadingProgress = downloadingProgress;
     }
+    if (hasCopy != null) {
+      $result.hasCopy = hasCopy;
+    }
     return $result;
   }
   FResource._() : super();
@@ -222,6 +226,7 @@ class FResource extends $pb.GeneratedMessage {
     ..e<FResourceType>(6, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: FResourceType.UNKNOWN, valueOf: FResourceType.valueOf, enumValues: FResourceType.values)
     ..aOB(7, _omitFieldNames ? '' : 'isICloud', protoName: 'isICloud')
     ..a<$core.double>(8, _omitFieldNames ? '' : 'downloadingProgress', $pb.PbFieldType.OD, protoName: 'downloadingProgress')
+    ..aOB(9, _omitFieldNames ? '' : 'hasCopy', protoName: 'hasCopy')
     ..hasRequiredFields = false
   ;
 
@@ -311,6 +316,15 @@ class FResource extends $pb.GeneratedMessage {
   $core.bool hasDownloadingProgress() => $_has(7);
   @$pb.TagNumber(8)
   void clearDownloadingProgress() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.bool get hasCopy => $_getBF(8);
+  @$pb.TagNumber(9)
+  set hasCopy($core.bool v) { $_setBool(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasHasCopy() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearHasCopy() => clearField(9);
 }
 
 

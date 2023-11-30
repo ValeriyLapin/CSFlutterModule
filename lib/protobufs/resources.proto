@@ -31,4 +31,5 @@ message FResource {
     FResourceType type = 6;
     bool isICloud = 7;
     double downloadingProgress = 8;
+    bool hasCopy = 9;
 }
