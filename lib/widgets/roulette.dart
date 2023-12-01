@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data_transfer/selected_classroom_listener.dart';
+import '../gen/classroom.pb.dart';
 import '../models/item.dart';
+import '../utilities/file_helper.dart';
 import 'spinner.dart';
 
 class Roulette extends StatefulWidget {
@@ -15,8 +20,11 @@ class Roulette extends StatefulWidget {
 
 class _RouletteState extends State<Roulette>
     with SingleTickerProviderStateMixin {
-  static const channelName = 'com.amco.cs/randomStudentItems';
-  static const methodName = 'sendRandomItems';
+  late final SelectedClassroomListener classroomListener =
+      SelectedClassroomListener();
+  StreamSubscription<FClassroom>? subscription;
+  static const channelName = 'com.amco.cs/selectedClassroomMethodChannel';
+  static const methodName = 'studentSelected';
 
   late final AnimationController controller;
   List<Item> originalItems = [];
@@ -34,31 +42,36 @@ class _RouletteState extends State<Roulette>
       vsync: this,
       duration: const Duration(seconds: 5),
     )..addListener(update);
-    platform.setMethodCallHandler(handleMethodCall);
+
+    subscription = classroomListener.dataStream.listen(onClassroomUpdater);
   }
 
-  Future<dynamic> handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case methodName:
-        final List<dynamic> dynamicList = call.arguments;
-        List<Item> items = dynamicList.map((dynamic item) {
-          final itemMap = Map<String, dynamic>.from(item);
-          return Item.fromMap(itemMap);
-        }).toList();
-        setState(() {
-          originalItems = items;
-          this.items = items.toList();
-        });
-        break;
-      default:
-        throw MissingPluginException();
-    }
+  void onClassroomUpdater(FClassroom classroom) {
+    unawaited(updateUI(classroom));
+  }
+
+  Future<void> updateUI(FClassroom classroom) async {
+    print('### updateUI');
+    final items =
+        await Future.wait(classroom.students.map((FStudent student) async {
+      final path = await FileHelper.getStudentPreviewPath(student.id);
+      print('### updateUI path=$path');
+      return Item(
+        name: "${student.firstName} ${student.lastName}",
+        image: Image.file(File(path)),
+      );
+    }).toList());
+    setState(() {
+      originalItems = items;
+      this.items = items.toList();
+    });
   }
 
   @override
   void dispose() {
     controller.removeListener(update);
     controller.stop(canceled: true);
+    subscription?.cancel();
     super.dispose();
   }
 
@@ -88,19 +101,46 @@ class _RouletteState extends State<Roulette>
     setState(() {});
 
     await controller.forward();
+    print('### startRoulette end=$end');
     setState(() => prevEnd = end.toInt());
   }
 
-  ImageProvider<Object>? get backgroundImage {
-    if (items.isEmpty) {
-      return null;
-    }
-    final imageData = items[animation.value.round() % items.length].imageData;
-    if (imageData == null) {
-      return null;
-    }
-    return MemoryImage(imageData);
-  }
+  Widget buildFloatingActionButtons() => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (prevEnd != null) ...[
+            FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () {
+                setState(() {
+                  items.removeAt(prevEnd!);
+                  prevEnd = null;
+                });
+                controller.reset();
+              },
+              tooltip: 'Remove',
+              child: const Icon(Icons.remove_circle),
+            ),
+            const SizedBox(width: 8),
+          ],
+          FloatingActionButton(
+            onPressed: () {
+              controller.stop();
+              controller.reset();
+              setState(() {
+                prevEnd = null;
+                items = originalItems.toList();
+              });
+            },
+            tooltip: 'Restart',
+            child: const Icon(Icons.refresh),
+          ),
+        ],
+      );
+
+  ImageProvider<Object>? get imageProvider => items.isEmpty
+      ? null
+      : items[animation.value.round() % items.length].image as ImageProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +172,7 @@ class _RouletteState extends State<Roulette>
                             color: Colors.white,
                             shape: BoxShape.circle,
                           ),
-                          child: CircleAvatar(backgroundImage: backgroundImage),
+                          child: CircleAvatar(backgroundImage: imageProvider),
                         ),
                       ),
                     ),
@@ -143,40 +183,7 @@ class _RouletteState extends State<Roulette>
           ),
         ),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (prevEnd != null) ...[
-            FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () {
-                setState(() {
-                  items.removeAt(prevEnd!);
-                  prevEnd = null;
-                });
-                controller.reset();
-              },
-              tooltip: 'Remove',
-              child: const Icon(Icons.remove_circle),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-          ],
-          FloatingActionButton(
-            onPressed: () {
-              controller.stop();
-              controller.reset();
-              setState(() {
-                prevEnd = null;
-                items = originalItems.toList();
-              });
-            },
-            tooltip: 'Restart',
-            child: const Icon(Icons.refresh),
-          ),
-        ],
-      ),
+      floatingActionButton: buildFloatingActionButtons(),
     );
   }
 }
