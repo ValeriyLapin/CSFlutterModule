@@ -44,7 +44,13 @@ class _RouletteState extends State<Roulette>
       duration: const Duration(seconds: 5),
     )..addListener(update);
 
-    subscription = classroomListener.dataStream.listen(onClassroomUpdater);
+    subscription = classroomListener.dataStream.listen(
+      onClassroomUpdater,
+      onError: (error) {
+        // Handle or log the error
+        print('### Error listening to stream: $error');
+      },
+    );
   }
 
   void onClassroomUpdater(FClassroom classroom) {

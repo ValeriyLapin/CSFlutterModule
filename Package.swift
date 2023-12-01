@@ -13,11 +13,11 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "App",
-            path: "build/iOS/Release/App.xcframework"
+            path: "build/iOS/Debug/App.xcframework"
         ),
         .binaryTarget(
             name: "Flutter",
-            path: "build/iOS/Release/Flutter.xcframework"
+            path: "build/iOS/Debug/Flutter.xcframework"
         )
     ]
 )
