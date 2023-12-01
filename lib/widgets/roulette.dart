@@ -38,6 +38,7 @@ class _RouletteState extends State<Roulette>
   @override
   void initState() {
     super.initState();
+    print('### initState, set subscription');
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
@@ -47,6 +48,7 @@ class _RouletteState extends State<Roulette>
   }
 
   void onClassroomUpdater(FClassroom classroom) {
+    print('### onClassroomUpdater');
     unawaited(updateUI(classroom));
   }
 
