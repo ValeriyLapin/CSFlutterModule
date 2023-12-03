@@ -39,6 +39,7 @@ Icon?
 
 .android/
 .ios/Debug
+.ios/Release/path_provider_foundation.xcframework
 .ios/Profile
 .flutter-plugins
 .flutter-plugins-dependencies
