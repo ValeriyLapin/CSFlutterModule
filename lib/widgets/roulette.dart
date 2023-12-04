@@ -49,6 +49,7 @@ class _RouletteState extends State<Roulette>
   }
 
   Future<void> requestSelectedClassroomData() async {
+    print('### requestSelectedClassroomData');
     try {
       final result = await platform.invokeMethod(requestForSelectedClassroomMethod);
       // Assuming the result is a serialized FClassroom object
@@ -60,6 +61,7 @@ class _RouletteState extends State<Roulette>
   }
 
   Future<void> onStudentSelected(String id) async {
+    print('### onStudentSelected id=$id');
     try {
       await platform.invokeMethod(studentSelectedMethod, id);
     } catch (e) {
@@ -68,6 +70,7 @@ class _RouletteState extends State<Roulette>
   }
 
   void startListeningForClassroomChanged() {
+    print('### startListeningForClassroomChanged');
     platform.setMethodCallHandler((MethodCall call) async {
       if (call.method == sendSelectedClassroomMethod) {
         final classroom = FClassroom.fromBuffer(call.arguments);
@@ -96,6 +99,7 @@ class _RouletteState extends State<Roulette>
 
   @override
   void dispose() {
+    print('### dispose');
     controller.removeListener(update);
     controller.stop(canceled: true);
 

@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
       routes: {
         'roulette': (_) => const Roulette(),
       },
-      home: const Roulette(),
     );
   }
 }
