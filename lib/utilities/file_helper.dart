@@ -9,7 +9,8 @@ class FileHelper {
         directory.path,
         "students",
         studentId.removeDocId(),
-        "preview.png"
+        "thumbnail.png"
+        // "preview.png"
     );
   }
 }
