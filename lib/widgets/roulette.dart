@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../data_transfer/selected_classroom_listener.dart';
 import '../gen/classroom.pb.dart';
 import '../models/item.dart';
 // import '../utilities/file_helper.dart';
@@ -20,11 +19,12 @@ class Roulette extends StatefulWidget {
 
 class _RouletteState extends State<Roulette>
     with SingleTickerProviderStateMixin {
-  late final SelectedClassroomListener classroomListener =
-      SelectedClassroomListener();
-  StreamSubscription<FClassroom>? subscription;
   static const channelName = 'com.amco.cs/selectedClassroomMethodChannel';
-  static const methodName = 'studentSelected';
+  static const studentSelectedMethod = 'studentSelected';
+  static const requestForSelectedClassroomMethod =
+      'requestForSelectedClassroom';
+  static const sendSelectedClassroomMethod = 'sendSelectedClassroom';
+  final channel = const MethodChannel(channelName);
 
   late final AnimationController controller;
   List<Item> originalItems = [];
@@ -44,18 +44,36 @@ class _RouletteState extends State<Roulette>
       duration: const Duration(seconds: 5),
     )..addListener(update);
 
-    subscription = classroomListener.dataStream.listen(
-      onClassroomUpdater,
-      onError: (error) {
-        // Handle or log the error
-        print('### Error listening to stream: $error');
-      },
-    );
+    requestSelectedClassroomData();
+    startListeningForClassroomChanged();
   }
 
-  void onClassroomUpdater(FClassroom classroom) {
-    print('### onClassroomUpdater');
-    unawaited(updateUI(classroom));
+  Future<void> requestSelectedClassroomData() async {
+    try {
+      final result = await platform.invokeMethod(requestForSelectedClassroomMethod);
+      // Assuming the result is a serialized FClassroom object
+      final classroom = FClassroom.fromBuffer(result);
+      updateUI(classroom);
+    } catch (e) {
+      print('### Error occurred while requesting classroom data: $e');
+    }
+  }
+
+  Future<void> onStudentSelected(String id) async {
+    try {
+      await platform.invokeMethod(studentSelectedMethod, id);
+    } catch (e) {
+      print('### Error occurred while sending selected student data: $e');
+    }
+  }
+
+  void startListeningForClassroomChanged() {
+    platform.setMethodCallHandler((MethodCall call) async {
+      if (call.method == sendSelectedClassroomMethod) {
+        final classroom = FClassroom.fromBuffer(call.arguments);
+        updateUI(classroom);
+      }
+    });
   }
 
   Future<void> updateUI(FClassroom classroom) async {
@@ -65,6 +83,7 @@ class _RouletteState extends State<Roulette>
       final path = 'fake path'; //await FileHelper.getStudentPreviewPath(student.id);
       print('### updateUI path=$path');
       return Item(
+        id: student.id,
         name: "${student.firstName} ${student.lastName}",
         image: Image.file(File(path)),
       );
@@ -79,7 +98,7 @@ class _RouletteState extends State<Roulette>
   void dispose() {
     controller.removeListener(update);
     controller.stop(canceled: true);
-    subscription?.cancel();
+
     super.dispose();
   }
 
@@ -110,7 +129,11 @@ class _RouletteState extends State<Roulette>
 
     await controller.forward();
     print('### startRoulette end=$end');
-    setState(() => prevEnd = end.toInt());
+    setState(() {
+      prevEnd = end.toInt();
+      final selectedStudentId = items[prevEnd!].id;
+      onStudentSelected(selectedStudentId);
+    });
   }
 
   Widget buildFloatingActionButtons() => Row(
