@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../gen/classroom.pb.dart';
-import '../models/roulette_item.dart';
-import '../utilities/file_helper.dart';
+import 'roulette_item.dart';
+import 'roulette_view_model.dart';
 import 'spinner.dart';
 
 class Roulette extends StatefulWidget {
@@ -20,10 +16,7 @@ class Roulette extends StatefulWidget {
 
 class _RouletteState extends State<Roulette>
     with SingleTickerProviderStateMixin {
-  static const channelName = 'com.amco.cs/selectedClassroomMethodChannel';
-  static const studentSelectedMethod = 'studentSelected';
-  static const sendSelectedClassroomMethod = 'sendSelectedClassroom';
-  final channel = const MethodChannel(channelName);
+  final viewModel = RouletteViewModel();
 
   late final AnimationController controller;
   List<RouletteItem> originalItems = [];
@@ -32,52 +25,19 @@ class _RouletteState extends State<Roulette>
   late Animation<double> animation = tween.animate(controller);
   int? prevEnd;
 
-  late final platform = const MethodChannel(channelName);
-
   @override
   void initState() {
     super.initState();
-    print('### initState, set subscription');
+
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
     )..addListener(update);
 
-    startListeningForSelectedClassroom();
+    viewModel.startListeningForSelectedClassroom(updateUI);
   }
 
-  Future<void> onStudentSelected(String id) async {
-    print('### onStudentSelected id=$id');
-    try {
-      final data = Uint8List.fromList(utf8.encode(id));
-      await platform.invokeMethod(studentSelectedMethod, data);
-    } catch (e) {
-      print('### Error occurred while sending selected student data: $e');
-    }
-  }
-
-  void startListeningForSelectedClassroom() {
-    print('### startListeningForClassroomChanged');
-    platform.setMethodCallHandler((MethodCall call) async {
-      if (call.method == sendSelectedClassroomMethod) {
-        final classroom = FClassroom.fromBuffer(call.arguments);
-        updateUI(classroom);
-      }
-    });
-  }
-
-  Future<void> updateUI(FClassroom classroom) async {
-    print('### updateUI');
-    final items =
-        await Future.wait(classroom.students.map((FStudent student) async {
-      final path = await FileHelper.getStudentPreviewPath(student.id);
-      print('### updateUI path=$path');
-      return RouletteItem(
-        id: student.id,
-        name: "${student.firstName} ${student.lastName}",
-        imageProvider: FileImage(File(path)),
-      );
-    }).toList());
+  Future<void> updateUI(List<RouletteItem> items) async {
     setState(() {
       originalItems = items;
       this.items = items.toList();
@@ -86,7 +46,6 @@ class _RouletteState extends State<Roulette>
 
   @override
   void dispose() {
-    print('### dispose');
     controller.removeListener(update);
     controller.stop(canceled: true);
 
@@ -119,11 +78,11 @@ class _RouletteState extends State<Roulette>
     setState(() {});
 
     await controller.forward();
-    print('### startRoulette end=$end');
+
     setState(() {
       prevEnd = end.toInt();
       final selectedStudentId = items[prevEnd!].id;
-      onStudentSelected(selectedStudentId);
+      viewModel.onStudentSelected(selectedStudentId);
     });
   }
 

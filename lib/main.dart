@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'widgets/roulette.dart';
+import 'roulette/roulette.dart';
 
 const methodChannel = MethodChannel('com.amco.cs');
 
@@ -22,10 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: 'roulette',
-      routes: {
-        'roulette': (_) => const Roulette(),
-      },
+      routes: {'roulette': (_) => const Roulette()},
     );
   }
 }
-

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/roulette_item.dart';
+import 'roulette_item.dart';
 import '../painters/spinner_painter.dart';
 
 class Spinner extends AnimatedWidget {

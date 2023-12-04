@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../models/roulette_item.dart';
+import '../roulette/roulette_item.dart';
 
 class SpinnerPainter extends CustomPainter {
   SpinnerPainter({
