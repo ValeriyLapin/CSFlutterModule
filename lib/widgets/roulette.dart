@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../gen/classroom.pb.dart';
-import '../models/item.dart';
+import '../models/roulette_item.dart';
 import '../utilities/file_helper.dart';
 import 'spinner.dart';
 
@@ -25,7 +25,7 @@ class _RouletteState extends State<Roulette>
   final channel = const MethodChannel(channelName);
 
   late final AnimationController controller;
-  List<Item> originalItems = [];
+  List<RouletteItem> originalItems = [];
   late var items = originalItems.toList();
   late Tween<double> tween = Tween(begin: 0, end: items.length.toDouble() - 1);
   late Animation<double> animation = tween.animate(controller);
@@ -70,10 +70,10 @@ class _RouletteState extends State<Roulette>
         await Future.wait(classroom.students.map((FStudent student) async {
       final path = await FileHelper.getStudentPreviewPath(student.id);
       print('### updateUI path=$path');
-      return Item(
+      return RouletteItem(
         id: student.id,
         name: "${student.firstName} ${student.lastName}",
-        image: Image.file(File(path)),
+        imageProvider: FileImage(File(path)),
       );
     }).toList());
     setState(() {
@@ -160,7 +160,7 @@ class _RouletteState extends State<Roulette>
 
   ImageProvider<Object>? get imageProvider => items.isEmpty
       ? null
-      : items[animation.value.round() % items.length].image as ImageProvider;
+      : items[animation.value.round() % items.length].imageProvider;
 
   @override
   Widget build(BuildContext context) {

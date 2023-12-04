@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../models/item.dart';
+import '../models/roulette_item.dart';
 
 class SpinnerPainter extends CustomPainter {
   SpinnerPainter({
@@ -13,7 +13,7 @@ class SpinnerPainter extends CustomPainter {
   });
 
   final double rotation;
-  final List<Item> items;
+  final List<RouletteItem> items;
   final double radius;
   final int? prevEnd;
 

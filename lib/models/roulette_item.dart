@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Item {
-  Item({
+class RouletteItem {
+  RouletteItem({
     required this.id,
     required this.name,
-    required this.image,
+    required this.imageProvider,
     this.selected = false,
   });
 
   final String id;
   final String name;
-  final Image image;
+  final ImageProvider imageProvider;
   bool selected;
 }
 

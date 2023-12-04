@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/item.dart';
+import '../models/roulette_item.dart';
 import '../painters/spinner_painter.dart';
 
 class Spinner extends AnimatedWidget {
@@ -14,7 +14,7 @@ class Spinner extends AnimatedWidget {
     this.child,
   }) : super(key: key, listenable: animation);
 
-  final List<Item> items;
+  final List<RouletteItem> items;
   final double radius;
   final int? prevEnd;
   final Widget? child;
