@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import '../data_transfer/selected_classroom_listener.dart';
 import '../gen/classroom.pb.dart';
 import '../models/item.dart';
-import '../utilities/file_helper.dart';
+// import '../utilities/file_helper.dart';
 import 'spinner.dart';
 
 class Roulette extends StatefulWidget {
@@ -62,7 +62,7 @@ class _RouletteState extends State<Roulette>
     print('### updateUI');
     final items =
         await Future.wait(classroom.students.map((FStudent student) async {
-      final path = await FileHelper.getStudentPreviewPath(student.id);
+      final path = 'fake path'; //await FileHelper.getStudentPreviewPath(student.id);
       print('### updateUI path=$path');
       return Item(
         name: "${student.firstName} ${student.lastName}",
