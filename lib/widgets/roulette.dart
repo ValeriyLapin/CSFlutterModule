@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -48,7 +49,8 @@ class _RouletteState extends State<Roulette>
   Future<void> onStudentSelected(String id) async {
     print('### onStudentSelected id=$id');
     try {
-      await platform.invokeMethod(studentSelectedMethod, id);
+      final data = Uint8List.fromList(utf8.encode(id));
+      await platform.invokeMethod(studentSelectedMethod, data);
     } catch (e) {
       print('### Error occurred while sending selected student data: $e');
     }
