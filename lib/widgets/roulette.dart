@@ -21,8 +21,6 @@ class _RouletteState extends State<Roulette>
     with SingleTickerProviderStateMixin {
   static const channelName = 'com.amco.cs/selectedClassroomMethodChannel';
   static const studentSelectedMethod = 'studentSelected';
-  static const requestForSelectedClassroomMethod =
-      'requestForSelectedClassroom';
   static const sendSelectedClassroomMethod = 'sendSelectedClassroom';
   final channel = const MethodChannel(channelName);
 
@@ -44,20 +42,7 @@ class _RouletteState extends State<Roulette>
       duration: const Duration(seconds: 5),
     )..addListener(update);
 
-    requestSelectedClassroomData();
-    startListeningForClassroomChanged();
-  }
-
-  Future<void> requestSelectedClassroomData() async {
-    print('### requestSelectedClassroomData');
-    try {
-      final result = await platform.invokeMethod(requestForSelectedClassroomMethod);
-      // Assuming the result is a serialized FClassroom object
-      final classroom = FClassroom.fromBuffer(result);
-      updateUI(classroom);
-    } catch (e) {
-      print('### Error occurred while requesting classroom data: $e');
-    }
+    startListeningForSelectedClassroom();
   }
 
   Future<void> onStudentSelected(String id) async {
@@ -69,7 +54,7 @@ class _RouletteState extends State<Roulette>
     }
   }
 
-  void startListeningForClassroomChanged() {
+  void startListeningForSelectedClassroom() {
     print('### startListeningForClassroomChanged');
     platform.setMethodCallHandler((MethodCall call) async {
       if (call.method == sendSelectedClassroomMethod) {
