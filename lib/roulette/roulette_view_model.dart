@@ -13,6 +13,8 @@ class RouletteViewModel {
   static const studentSelectedMethod = 'studentSelected';
   static const sendSelectedClassroomMethod = 'sendSelectedClassroom';
   final MethodChannel platform = const MethodChannel(channelName);
+  late final Image _placeholderImage =
+      Image.asset('assets/images/student_icon.png');
 
   Future<void> onStudentSelected(String id) async {
     try {
@@ -31,10 +33,13 @@ class RouletteViewModel {
         final items =
             await Future.wait(classroom.students.map((FStudent student) async {
           final path = await FileHelper.getStudentPreviewPath(student.id);
+          final exists = await File(path).exists();
+
           return RouletteItem(
             id: student.id,
             name: "${student.firstName} ${student.lastName}",
-            imageProvider: FileImage(File(path)),
+            imageProvider:
+                exists ? FileImage(File(path)) : _placeholderImage.image,
           );
         }).toList());
         updateUI(items);

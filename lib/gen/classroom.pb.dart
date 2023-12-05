@@ -163,15 +163,15 @@ class FStudent extends $pb.GeneratedMessage {
 
 class FClassroom extends $pb.GeneratedMessage {
   factory FClassroom({
-    $core.String? documentId,
+    $core.String? id,
     $core.String? fullName,
     $core.String? name,
     $core.String? schoolGradeName,
     $core.Iterable<FStudent>? students,
   }) {
     final $result = create();
-    if (documentId != null) {
-      $result.documentId = documentId;
+    if (id != null) {
+      $result.id = id;
     }
     if (fullName != null) {
       $result.fullName = fullName;
@@ -192,7 +192,7 @@ class FClassroom extends $pb.GeneratedMessage {
   factory FClassroom.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FClassroom', createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'documentId')
+    ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'fullName')
     ..aOS(3, _omitFieldNames ? '' : 'name')
     ..aOS(4, _omitFieldNames ? '' : 'schoolGradeName')
@@ -222,13 +222,13 @@ class FClassroom extends $pb.GeneratedMessage {
   static FClassroom? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get documentId => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set documentId($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasDocumentId() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearDocumentId() => clearField(1);
+  void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get fullName => $_getSZ(1);

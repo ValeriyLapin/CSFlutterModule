@@ -12,9 +12,10 @@ message FStudent {
 }
 
 message FClassroom {
-    string document_id = 1;
+    string id = 1;
     string full_name = 2;
     string name = 3;
     string school_grade_name = 4;
     repeated FStudent students = 5;
 }
+
