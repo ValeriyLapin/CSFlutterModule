@@ -19,7 +19,7 @@ class RouletteViewModel {
   Future<void> onStudentSelected(String id) async {
     try {
       final data = Uint8List.fromList(utf8.encode(id));
-      await _platform.invokeMethod(_studentSelectedMethod, {'data': data});
+      await _platform.invokeMethod(_studentSelectedMethod, data);
     } catch (e) {
       print('### Error occurred while sending selected student data: $e');
     }
