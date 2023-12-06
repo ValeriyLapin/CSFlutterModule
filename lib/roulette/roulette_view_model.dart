@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -18,8 +17,7 @@ class RouletteViewModel {
 
   Future<void> onStudentSelected(String id) async {
     try {
-      final data = Uint8List.fromList(utf8.encode(id));
-      await _platform.invokeMethod(_studentSelectedMethod, data);
+      await _platform.invokeMethod(_studentSelectedMethod, id);
     } catch (e) {
       print('### Error occurred while sending selected student data: $e');
     }
