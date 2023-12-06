@@ -9,17 +9,17 @@ import '../utilities/file_helper.dart';
 import 'roulette_item.dart';
 
 class RouletteViewModel {
-  static const channelName = 'com.amco.cs/selectedClassroomMethodChannel';
-  static const studentSelectedMethod = 'studentSelected';
-  static const sendSelectedClassroomMethod = 'sendSelectedClassroom';
-  final MethodChannel platform = const MethodChannel(channelName);
+  static const _channelName = 'com.amco.cs/selectedClassroomMethodChannel';
+  static const _studentSelectedMethod = 'studentSelected';
+  static const _sendSelectedClassroomMethod = 'sendSelectedClassroom';
+  final MethodChannel _platform = const MethodChannel(_channelName);
   late final Image _placeholderImage =
       Image.asset('assets/images/student_icon.png');
 
   Future<void> onStudentSelected(String id) async {
     try {
       final data = Uint8List.fromList(utf8.encode(id));
-      await platform.invokeMethod(studentSelectedMethod, data);
+      await _platform.invokeMethod(_studentSelectedMethod, data);
     } catch (e) {
       print('### Error occurred while sending selected student data: $e');
     }
@@ -27,8 +27,8 @@ class RouletteViewModel {
 
   void startListeningForSelectedClassroom(
       Function(List<RouletteItem>) updateUI) {
-    platform.setMethodCallHandler((MethodCall call) async {
-      if (call.method == sendSelectedClassroomMethod) {
+    _platform.setMethodCallHandler((MethodCall call) async {
+      if (call.method == _sendSelectedClassroomMethod) {
         final classroom = FClassroom.fromBuffer(call.arguments);
         final items =
             await Future.wait(classroom.students.map((FStudent student) async {
