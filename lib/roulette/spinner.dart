@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'spinner_painter.dart';
 import 'roulette_item.dart';
-import '../painters/spinner_painter.dart';
 
 class Spinner extends AnimatedWidget {
   const Spinner({
-    Key? key,
     required Animation<double> animation,
     required this.items,
     required this.radius,
     this.prevEnd,
     this.child,
-  }) : super(key: key, listenable: animation);
+    super.key,
+  }) : super(listenable: animation);
 
   final List<RouletteItem> items;
   final double radius;

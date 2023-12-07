@@ -55,23 +55,29 @@ class _RouletteState extends State<Roulette>
   void update() => setState(() {});
 
   Future<void> startRoulette(DragEndDetails details) async {
+    final pps = details.velocity.pixelsPerSecond;
+    final isClockwise = pps.dx.isNegative || pps.dy > 0;
     if (controller.isAnimating) {
       return;
     }
 
-    if (prevEnd != null && items.length <= 1) {
-      setState(() {
-        items = originalItems.toList();
-        prevEnd = null;
-      });
-      return;
+    var previous = 0.0;
+    if (prevEnd != null) {
+      previous = prevEnd!.toDouble();
+      prevEnd = null;
+      if (items.length <= 1) {
+        setState(() {
+          items = originalItems.toList();
+        });
+        return;
+      }
     }
 
     final end = (Random().nextDouble() * (items.length - 1)).roundToDouble();
     controller.reset();
     tween = Tween(
-      begin: 0,
-      end: end + (items.length * 2),
+      begin: isClockwise ? items.length * 3 + previous : previous,
+      end: isClockwise ? end : end + (items.length * 2),
     );
     animation = tween.animate(controller);
 
@@ -86,39 +92,6 @@ class _RouletteState extends State<Roulette>
     });
   }
 
-  Widget buildFloatingActionButtons() => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (prevEnd != null) ...[
-            FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () {
-                setState(() {
-                  items.removeAt(prevEnd!);
-                  prevEnd = null;
-                });
-                controller.reset();
-              },
-              tooltip: 'Remove',
-              child: const Icon(Icons.remove_circle),
-            ),
-            const SizedBox(width: 8),
-          ],
-          FloatingActionButton(
-            onPressed: () {
-              controller.stop();
-              controller.reset();
-              setState(() {
-                prevEnd = null;
-                items = originalItems.toList();
-              });
-            },
-            tooltip: 'Restart',
-            child: const Icon(Icons.refresh),
-          ),
-        ],
-      );
-
   ImageProvider<Object>? get imageProvider => items.isEmpty
       ? null
       : items[animation.value.round() % items.length].imageProvider;
@@ -128,14 +101,13 @@ class _RouletteState extends State<Roulette>
     return Scaffold(
       body: SizedBox.expand(
         child: Padding(
-          padding: const EdgeInsets.all(64),
+          padding: const EdgeInsets.all(32),
           child: LayoutBuilder(
             builder: (_, constraints) {
               final radius =
                   min(constraints.maxHeight, constraints.maxWidth) / 2;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onVerticalDragEnd: startRoulette,
@@ -164,7 +136,40 @@ class _RouletteState extends State<Roulette>
           ),
         ),
       ),
-      floatingActionButton: buildFloatingActionButtons(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (prevEnd != null) ...[
+            FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () {
+                setState(() {
+                  items.removeAt(prevEnd!);
+                  prevEnd = null;
+                });
+                controller.reset();
+              },
+              tooltip: 'Remove',
+              child: const Icon(Icons.remove_circle),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+          ],
+          FloatingActionButton(
+            onPressed: () {
+              controller.stop();
+              controller.reset();
+              setState(() {
+                prevEnd = null;
+                items = originalItems.toList();
+              });
+            },
+            tooltip: 'Restart',
+            child: const Icon(Icons.refresh),
+          ),
+        ],
+      ),
     );
   }
 }

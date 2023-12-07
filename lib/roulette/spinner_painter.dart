@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../roulette/roulette_item.dart';
+import 'roulette_item.dart';
 
 class SpinnerPainter extends CustomPainter {
   SpinnerPainter({
@@ -18,14 +18,19 @@ class SpinnerPainter extends CustomPainter {
   final int? prevEnd;
 
   final textLayoutBias = 0.7;
+  final minFontSize = 12.0;
+  final maxFontSize = 18.0;
+  final double stepGranularity = 1;
 
-  late final textStyle = const TextStyle(
+  late final textStyle = TextStyle(
     color: Colors.grey,
     fontWeight: FontWeight.bold,
+    fontSize: maxFontSize,
   );
-  late final selectedTextStyle = const TextStyle(
+  late final selectedTextStyle = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.bold,
+    fontSize: maxFontSize,
   );
 
   late final _paint = Paint()
@@ -36,6 +41,81 @@ class SpinnerPainter extends CustomPainter {
     ..color = Colors.blue
     ..style = PaintingStyle.fill;
 
+  List _calculateFontSize(String text, double width) {
+    final span = TextSpan(style: textStyle, text: text);
+
+    int left;
+    int right;
+
+    final num defaultFontSize =
+        textStyle.fontSize!.clamp(minFontSize, maxFontSize);
+    final defaultScale = defaultFontSize / textStyle.fontSize!;
+    if (_checkTextFits(span, defaultScale, width)) {
+      return <Object>[defaultFontSize, true];
+    }
+
+    left = (minFontSize / stepGranularity).floor();
+    right = (defaultFontSize / stepGranularity).ceil();
+
+    var lastValueFits = false;
+    while (left <= right) {
+      final mid = (left + (right - left) / 2).floor();
+      double scale;
+      scale = mid * stepGranularity / textStyle.fontSize!;
+
+      if (_checkTextFits(span, scale, width)) {
+        left = mid + 1;
+        lastValueFits = true;
+      } else {
+        right = mid - 1;
+      }
+    }
+
+    if (!lastValueFits) {
+      right += 1;
+    }
+
+    double fontSize;
+    fontSize = right * stepGranularity;
+
+    return <Object>[fontSize, lastValueFits];
+  }
+
+  bool _checkTextFits(
+    TextSpan text,
+    double scale,
+    double width,
+  ) {
+    final words = text.toPlainText().split(RegExp('\\s+'));
+
+    final wordWrapTextPainter = TextPainter(
+      text: TextSpan(
+        style: text.style,
+        text: words.join('\n'),
+      ),
+      textScaleFactor: scale,
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    );
+
+    wordWrapTextPainter.layout(maxWidth: width);
+
+    if (wordWrapTextPainter.didExceedMaxLines ||
+        wordWrapTextPainter.width > width) {
+      return false;
+    }
+
+    final textPainter = TextPainter(
+      text: text,
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    );
+
+    textPainter.layout(maxWidth: width);
+
+    return !(textPainter.didExceedMaxLines || textPainter.width > width);
+  }
+
   void drawSections(Canvas canvas, double radius) {
     double drewSweep = 0.0;
     for (int i = 0; i < items.length; i++) {
@@ -45,17 +125,23 @@ class SpinnerPainter extends CustomPainter {
       canvas.rotate((drewSweep + pi / 2 + sweep / 2));
 
       final style = prevEnd == i ? selectedTextStyle : textStyle;
-
+      final width = radius / 2;
+      final fontSize = _calculateFontSize(items[i].name, width);
       final tp = TextPainter(
-        text: TextSpan(text: items[i].name, style: style),
+        text: TextSpan(
+          text: items[i].name,
+          style: style.copyWith(fontSize: fontSize.firstOrNull),
+        ),
         textDirection: TextDirection.ltr,
+        maxLines: 1,
       );
-      tp.layout(maxWidth: radius / 2);
+      tp.layout(maxWidth: width);
       canvas.save();
-      final origin = Offset(-35, -radius * textLayoutBias);
-      final pivot = tp.size.center(origin);
-      canvas.translate(pivot.dx, pivot.dy);
+      final dy = -radius * textLayoutBias;
+      canvas.translate(0, dy);
       canvas.rotate(pi * 1.5);
+      final origin = Offset(0, dy);
+      final pivot = tp.size.center(origin);
       canvas.translate(-pivot.dx, -pivot.dy);
       tp.paint(canvas, origin);
 
