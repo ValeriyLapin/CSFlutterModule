@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import '../gen/classroom.pb.dart';
-import '../utilities/file_helper.dart';
-import 'roulette_item.dart';
+import '../../gen/classroom.pb.dart';
+import '../../utilities/file_helper.dart';
+import '../models/roulette_item.dart';
 
 class RouletteViewModel {
   static const _channelName = 'com.amco.cs/selectedClassroomMethodChannel';

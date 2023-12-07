@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'roulette/roulette.dart';
+import 'roulette/widgets/roulette.dart';
 
 void main() => runApp(const MyApp());
 

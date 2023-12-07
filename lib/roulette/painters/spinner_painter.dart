@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'roulette_item.dart';
+import '../models/roulette_item.dart';
 
 class SpinnerPainter extends CustomPainter {
   SpinnerPainter({
@@ -93,7 +93,7 @@ class SpinnerPainter extends CustomPainter {
         style: text.style,
         text: words.join('\n'),
       ),
-      textScaleFactor: scale,
+      textScaler: TextScaler.linear(scale),
       textDirection: TextDirection.ltr,
       maxLines: 1,
     );

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'roulette_item.dart';
+import '../models/roulette_item.dart';
 import 'roulette_view_model.dart';
 import 'spinner.dart';
 
