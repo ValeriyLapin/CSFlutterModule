@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../models/roulette_item.dart';
-import 'roulette_view_model.dart';
+import '../view_models/roulette_view_model.dart';
 import 'spinner.dart';
 
 class Roulette extends StatefulWidget {
